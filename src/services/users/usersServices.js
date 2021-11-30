@@ -4,7 +4,10 @@ const { existingEmail } = require('../../utils/errors');
 
 const createUser = async (user) => {
   const { error } = userSchema.validate(user);
-  if (error) return { error };
+  if (error) {
+    error.status = 'BAD_REQUEST';
+    return { error };
+  }
 
   const userFound = await findByEmail(user.email);
   if (userFound) return { error: existingEmail };
