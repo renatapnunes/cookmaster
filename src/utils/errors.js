@@ -8,7 +8,13 @@ const invalidLogin = {
   message: 'Incorrect username or password',
 };
 
+const tokenError = {
+  status: 'UNAUTHORIZED',
+  message: 'jwt malformed',
+};
+
 module.exports = {
   existingEmail,
   invalidLogin,
+  tokenError,
 };
