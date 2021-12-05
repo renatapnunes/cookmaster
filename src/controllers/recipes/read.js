@@ -3,7 +3,15 @@ const recipesService = require('../../services/recipes/recipesService');
 
 module.exports = async (req, res, next) => {
   try {
-    const list = await recipesService.listAllRecipes();
+    const id = req.params;
+    let list = {};
+
+    if ('id' in id) {
+      list = await recipesService.listRecipeById(id);
+    } else {
+      list = await recipesService.listAllRecipes();
+    }
+
     if ('error' in list) return next(list.error);
 
     return res.status(StatusCodes.OK).send(list);

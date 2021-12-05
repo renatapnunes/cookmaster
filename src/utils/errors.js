@@ -13,8 +13,14 @@ const tokenError = {
   message: 'jwt malformed',
 };
 
+const noRecipe = {
+  status: 'NOT_FOUND',
+  message: 'recipe not found',
+};
+
 module.exports = {
   existingEmail,
   invalidLogin,
   tokenError,
+  noRecipe,
 };

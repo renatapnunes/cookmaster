@@ -1,5 +1,6 @@
 const recipeSchema = require('../../schemas/recipeSchema');
-const { insert, findAll } = require('../../models/entity')('recipes');
+const { insert, findAll, findById } = require('../../models/entity')('recipes');
+const { noRecipe } = require('../../utils/errors');
 
 const createRecipe = async (recipe, userId) => {
   const { error } = recipeSchema.validate(recipe);
@@ -21,7 +22,15 @@ const listAllRecipes = async () => {
   return recipeList;
 };
 
+const listRecipeById = async (id) => {
+  const recipe = await findById(id);
+  if (!recipe) return { error: noRecipe };
+
+  return recipe;
+};
+
 module.exports = {
   createRecipe,
   listAllRecipes,
+  listRecipeById,
 };

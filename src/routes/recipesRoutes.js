@@ -7,5 +7,6 @@ const recipesRouter = express.Router({ mergeParams: true });
 
 recipesRouter.post('/', auth, createController);
 recipesRouter.get('/', readController);
+recipesRouter.get('/:id', readController);
 
 module.exports = recipesRouter;
