@@ -1,16 +1,6 @@
 const recipeSchema = require('../../schemas/recipeSchema');
-const { findById: findUserById } = require('../../models/entity')('users');
 const { findById, updateById } = require('../../models/entity')('recipes');
-const { noRecipe, unauthenticated } = require('../../utils/errors');
-
-const authorizedUser = async (id, userId) => {
-  const recipeFound = await findById(id);
-  if (!recipeFound) return { error: noRecipe };
-
-  if (recipeFound.userId !== userId) return { error: unauthenticated };
-
-  return recipeFound;
-};
+const authorizedUser = require('./authorizedUser');
 
 module.exports = async (id, newData, userId) => {
   const { error } = recipeSchema.validate(newData);
@@ -19,11 +9,7 @@ module.exports = async (id, newData, userId) => {
     return { error };
   }
 
-  const { role } = await findUserById(userId);
-  if (role !== 'admin') {
-    const authorized = await authorizedUser(id, userId);
-    if ('error' in authorized) return authorized;
-  }
+  await authorizedUser(id, userId);
 
   let updatedRecipe = await updateById(id, { ...newData, userId });
 
