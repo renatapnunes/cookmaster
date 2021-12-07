@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { tokenError } = require('../utils/errors');
+const { tokenError, unauthenticated } = require('../utils/errors');
 
 const API_SECRET = 'nadaseguro';
 
@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
-    if (!token) return next(tokenError);
+    if (!token) return next(unauthenticated);
 
     const decoded = jwt.verify(token, API_SECRET);
     if (!decoded) return next(tokenError);

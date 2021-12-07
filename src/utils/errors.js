@@ -18,9 +18,15 @@ const noRecipe = {
   message: 'recipe not found',
 };
 
+const unauthenticated = {
+  status: 'UNAUTHORIZED',
+  message: 'missing auth token',
+};
+
 module.exports = {
   existingEmail,
   invalidLogin,
   tokenError,
   noRecipe,
+  unauthenticated,
 };

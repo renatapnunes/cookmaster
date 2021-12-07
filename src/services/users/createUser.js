@@ -2,7 +2,7 @@ const userSchema = require('../../schemas/userSchema');
 const { findByEmail, insert } = require('../../models/entity')('users');
 const { existingEmail } = require('../../utils/errors');
 
-const createUser = async (user) => {
+module.exports = async (user) => {
   const { error } = userSchema.validate(user);
   if (error) {
     error.status = 'BAD_REQUEST';
@@ -18,8 +18,4 @@ const createUser = async (user) => {
   delete userData.password;
   
   return { user: userData };
-};
-
-module.exports = {  
-  createUser,
 };

@@ -6,11 +6,11 @@ const { invalidLogin } = require('../../utils/errors');
 const API_SECRET = 'nadaseguro';
 
 const JWT_CONFIG = {
-  expiresIn: '15m', // token expira após 15min
+  expiresIn: '30m', // token expira após 30min
   algorithm: 'HS256', //  criptografia: HMAC com SHA256 (chaves privadas)
 };
 
-const authorizeLogin = async (user) => {
+module.exports = async (user) => {
   const { error } = loginSchema.validate(user);
   if (error) {
     error.status = 'UNAUTHORIZED';
@@ -26,8 +26,4 @@ const authorizeLogin = async (user) => {
   const token = jwt.sign({ data: userFound }, API_SECRET, JWT_CONFIG);
 
   return { token };
-};
-
-module.exports = {
-  authorizeLogin,
 };
